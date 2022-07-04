@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'SettingsTools.dart';
+
 //-Шапка. На ней расположены: название приложения(?), панель инструментов
 class ToolsBar extends StatefulWidget {
   const ToolsBar({Key? key}) : super(key: key);
@@ -12,14 +14,17 @@ class ToolsBarWidget extends State<ToolsBar> {
     return Scaffold(
       appBar:AppBar(
         title: const Text('Электронный журнал'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.settings),
-            tooltip: 'Настройки',
-            onPressed: () {
-              //TODO handle the press
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            itemBuilder: (BuildContext contex){
+              return SettingsTools.toolsTitles.map((String tool){
+                return PopupMenuItem<String>(
+                  value: tool,
+                  child: Text(tool),
+                );
+              }).toList();
             },
-          ),
+          )
         ],
       ),
     );
