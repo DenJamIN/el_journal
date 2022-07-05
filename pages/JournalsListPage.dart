@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'ToolsBar.dart';
+import '../ToolsBar.dart';
 
 void main() {
   runApp(const JournalsList());
