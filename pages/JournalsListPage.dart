@@ -2,14 +2,16 @@ import 'package:el_journal/pages/JournalConstructorPage.dart';
 import 'package:flutter/material.dart';
 
 import '../BuilderLists.dart';
+import '../Journal.dart';
 
 //-Шапка. На ней расположены: название приложения(?), панель инструментов
-class ToolsBar extends StatefulWidget {
-  const ToolsBar({Key? key}) : super(key: key);
+class JournalsListPage extends StatefulWidget {
+  const JournalsListPage({Key? key}) : super(key: key);
   @override
-  State<ToolsBar> createState() => ToolsBarWidget();
+  State<JournalsListPage> createState() => _JournalsListPage();
 }
-class ToolsBarWidget extends State<ToolsBar> {
+//TODO переписать все вызовы и построения
+class _JournalsListPage extends State<JournalsListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +28,7 @@ class ToolsBarWidget extends State<ToolsBar> {
             },
           ),
           PopupMenuButton<String>(
-            itemBuilder: (BuildContext contex){
+            itemBuilder: (BuildContext context){
               return SettingsTools.toolsTitles.map((String tool){
                 return PopupMenuItem<String>(
                   value: tool,
@@ -43,67 +45,60 @@ class ToolsBarWidget extends State<ToolsBar> {
                 children: <Widget>[
                   Container(
                     margin: const EdgeInsets.all(10),
-                    child: DataTable(
-                      border: const TableBorder(
-                          horizontalInside: BorderSide(
-                            width: 1,
-                            color: Colors.amberAccent,
-                            style: BorderStyle.solid
-                          ),
-                          verticalInside: BorderSide(
-                              width: 1,
-                              color: Colors.amberAccent,
-                              style: BorderStyle.solid
-                          ),
-                      ),
-                      columns: const <DataColumn>[
-                        DataColumn(
-                          label: Text(
-                            'Дисциплина',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Text(
-                            'Группа',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                      rows: List<DataRow>.generate(
-                          JournalList.journals.length,
-                          (index) => DataRow(
-                            cells: <DataCell>[
-                              //+Дисциплина
-                              DataCell(
-                                Text(
-                                  JournalList.journals[index].discipline.toString(),
-                                  style: const TextStyle(
-                                    fontSize: 16
-                                  ),
-                                )
-                              ),
-                              //+Группа
-                              DataCell(
-                                  Text(
-                                    JournalList.journals[index].group.toString(),
-                                    style: const TextStyle(
-                                        fontSize: 16
-                                    ),
-                                  )
-                              ),
-                            ],
-                          ),
-                      ),
-                    ),
+                    child: buildDataTable(),
                   ),
                 ]
             )
         )
     );
+  }
+
+  List<Journal> journals = JournalList.journals;
+  int? sortColumnIndex;
+  bool isAscending = false;
+
+  Widget buildDataTable(){
+    final columns = ['Дисциплина','Группа'];
+
+    return DataTable(
+      sortAscending: isAscending,
+      sortColumnIndex: sortColumnIndex,
+      columns: getColumns(columns),
+      rows: getRows(journals),
+    );
+  }
+
+  List<DataColumn> getColumns(List<String> columns) =>
+      columns.map((String column) =>
+          DataColumn(
+              label: Text(column),
+              onSort: onSort
+          )
+      ).toList();
+
+  List<DataRow> getRows(List<Journal> journals) => journals
+      .map((Journal journal) {
+    final cells = [journal.discipline.toString(), journal.group.toString()];
+    return DataRow(cells: getCells(cells));
+  }).toList();
+
+  List<DataCell> getCells(List<dynamic> cells) => cells
+      .map((cell) => DataCell(Text('$cell')
+  )).toList();
+
+  void onSort(int columnIndex, bool ascending){
+    if(columnIndex == 0){
+      journals.sort((a,b)=>compareString(ascending, a.discipline.toString(), b.discipline.toString()));
+    } else if (columnIndex == 1){
+      journals.sort((a,b)=>compareString(ascending, a.group.toString(), b.group.toString()));
+    }
+    setState(() {
+      this.sortColumnIndex = columnIndex;
+      this.isAscending = ascending;
+    });
+  }
+
+  int compareString(bool ascending, String value1, String value2){
+    return ascending ? value1.compareTo(value2) : value2.compareTo(value1);
   }
 }

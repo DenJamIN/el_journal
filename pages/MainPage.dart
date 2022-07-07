@@ -14,7 +14,7 @@ class JournalsList extends StatelessWidget {
     return MaterialApp(
       title: 'Электронный журнал',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const ToolsBar(),
+      home: const JournalsListPage(),
       debugShowCheckedModeBanner: false,
     );
   }
