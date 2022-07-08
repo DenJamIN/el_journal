@@ -1,8 +1,9 @@
 
 
-import 'package:el_journal/Discipline.dart';
-import 'package:el_journal/Group.dart';
-import 'package:el_journal/Journal.dart';
+import 'package:el_journal/entities/Discipline.dart';
+import 'package:el_journal/entities/Journal.dart';
+
+import '../entities/Group.dart';
 
 mixin SettingsTools {
   static const List<String> toolsTitles = <String>[

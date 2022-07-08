@@ -1,7 +1,8 @@
 
 
-import 'package:el_journal/Discipline.dart';
-import 'package:el_journal/Group.dart';
+import 'package:el_journal/entities/Discipline.dart';
+
+import 'Group.dart';
 
 class Journal{
   late String name;

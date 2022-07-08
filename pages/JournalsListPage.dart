@@ -2,7 +2,7 @@ import 'package:el_journal/pages/JournalConstructorPage.dart';
 import 'package:flutter/material.dart';
 
 import '../builders/BuilderLists.dart';
-import '../Journal.dart';
+import '../entities/Journal.dart';
 import '../builders/PopupMenuBuilder.dart';
 
 //-Шапка. На ней расположены: название приложения(?), панель инструментов
