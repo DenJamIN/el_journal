@@ -12,11 +12,8 @@ class PopupMenuBuilder{
     };
   }
 
-  static List<PopupMenuEntry<String>> getEntries(List<String> tools) =>
-      tools.map((String tool){
-        return PopupMenuItem<String>(
-          value: tool,
-          child: Text(tool),
-        );
-      }).toList();
+  static List<PopupMenuEntry<String>> getEntries(List<String> tools) => tools
+      .map((String tool) => PopupMenuItem<String>(value: tool, child: Text(tool)))
+      .toList();
+
 }
