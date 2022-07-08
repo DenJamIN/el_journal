@@ -1,8 +1,9 @@
 import 'package:el_journal/pages/JournalConstructorPage.dart';
 import 'package:flutter/material.dart';
 
-import '../BuilderLists.dart';
+import '../builders/BuilderLists.dart';
 import '../Journal.dart';
+import '../builders/PopupMenuBuilder.dart';
 
 //-Шапка. На ней расположены: название приложения(?), панель инструментов
 class JournalsListPage extends StatefulWidget {
@@ -28,14 +29,7 @@ class _JournalsListPage extends State<JournalsListPage> {
             },
           ),
           PopupMenuButton<String>(
-            itemBuilder: (BuildContext context){
-              return SettingsTools.toolsTitles.map((String tool){
-                return PopupMenuItem<String>(
-                  value: tool,
-                  child: Text(tool),
-                );
-              }).toList();
-            },
+            itemBuilder: PopupMenuBuilder.buildPopupMenuItems(),
           ),
         ],
       ),
