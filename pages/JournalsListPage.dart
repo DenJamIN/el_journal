@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../builders/BuilderLists.dart';
 import '../entities/Journal.dart';
 import '../builders/PopupMenuBuilder.dart';
+import 'JournalPage.dart';
 
 //-Шапка. На ней расположены: название приложения(?), панель инструментов
 class JournalsListPage extends StatefulWidget {
@@ -82,9 +83,17 @@ class _JournalsListPage extends State<JournalsListPage> {
       .toList();
   }
 
-  List<DataCell> getCells(List<dynamic> cells) {
+  //TODO придумать обработку элемента из DataTable
+  List<DataCell> getCells(List<String> cells) {
     return cells
-        .map((cl) => DataCell(Text('$cl')))
+        .map((cl) => DataCell(
+                        onDoubleTap: (){
+                          Navigator.push(context, MaterialPageRoute<void>(
+                              builder: (context) => JournalPage(cells)
+                          ));
+                        },
+                        Text(cl)
+                     ))
         .toList();
   }
 
