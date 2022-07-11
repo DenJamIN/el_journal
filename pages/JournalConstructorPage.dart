@@ -9,36 +9,13 @@ class JournalConstructorPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      initialIndex: 1,
-      length: 2,
-      child: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           title: const Text('Конструктор журнала'),
-          bottom: const TabBar(
-            tabs: <Widget>[
-              Tab(
-                text: 'Форма заполнения',
-                icon: Icon(Icons.edit),
-              ),
-              Tab(
-                text: 'Список групп',
-                icon: Icon(Icons.list),
-              ),
-            ],
-          ),
         ),
-        body: const TabBarView(
-          children: <Widget>[
-            Center(
+        body: const Center(
               child: Text("Поля для заполнения журнала"),
             ),
-            Center(
-              child: Text("Список действующих групп, пока подумать зачем"),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
