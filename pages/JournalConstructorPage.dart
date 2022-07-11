@@ -13,9 +13,38 @@ class JournalConstructorPage extends StatelessWidget{
         appBar: AppBar(
           title: const Text('Конструктор журнала'),
         ),
-        body: const Center(
-              child: Text("Поля для заполнения журнала"),
-            ),
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[//TODO сделать генерацию
+              Container(
+                margin: const EdgeInsets.only(left: 30, top: 10, right: 30, bottom: 10),
+                child: const TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Название журнала',
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 30, top: 10, right: 30, bottom: 10),
+                child: const TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Дисциплина',
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 30, top: 10, right: 30, bottom: 10),
+                child: const TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Академическая группа',
+                  ),
+                ),
+              ),
+            ]
+        )
     );
   }
 }
