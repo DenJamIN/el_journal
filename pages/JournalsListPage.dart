@@ -38,16 +38,18 @@ class _JournalsListPage extends State<JournalsListPage> {
           ),
         ],
       ),
-      body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  margin: const EdgeInsets.all(10),
-                  child: buildDataTable(),
-                ),
-              ]
-          )
+      body: SingleChildScrollView(
+        child: Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.all(10),
+                    child: buildDataTable(),
+                  ),
+                ]
+            )
+        ),
       ),
     );
   }
