@@ -1,11 +1,8 @@
 import 'package:el_journal/pages/JournalConstructorPage.dart';
 import 'package:flutter/material.dart';
 
-import '../builders/BuilderLists.dart';
-import '../entities/Journal.dart';
 import '../widgets/JournalsListDataTableWidget.dart';
 import '../widgets/PopupMenuWidget.dart';
-import 'JournalPage.dart';
 
 //-Шапка. На ней расположены: название приложения(?), панель инструментов
 class JournalsListPage extends StatefulWidget{

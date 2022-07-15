@@ -1,6 +1,5 @@
 
 import 'package:el_journal/pages/JournalPage.dart';
-
 import 'package:flutter/material.dart';
 
 import '../builders/BuilderLists.dart';
