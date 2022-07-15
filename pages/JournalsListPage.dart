@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../builders/BuilderLists.dart';
 import '../entities/Journal.dart';
-import '../builders/PopupMenuBuilder.dart';
+import '../widgets/PopupMenuWidget.dart';
 import 'JournalPage.dart';
 
 //-Шапка. На ней расположены: название приложения(?), панель инструментов
@@ -30,12 +30,9 @@ class _JournalsListPage extends State<JournalsListPage> {
               Navigator.push(context, MaterialPageRoute<void>(
                   builder: (context) => const JournalConstructorPage()
               ));
-              },
+            },
           ),
-          PopupMenuButton(
-            itemBuilder: PopupMenuBuilder.buildPopupMenuItems(),
-            tooltip: "Настройки",
-          ),
+          PopupMenuWidget(),
         ],
       ),
       body: SingleChildScrollView(
