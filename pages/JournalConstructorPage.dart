@@ -24,6 +24,7 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
   final groupCtrl = TextEditingController();
   bool disciplineValidate = false;
   bool groupValidate = false;
+  String dropdownValue = GroupList.groups.first.toString();
 
   @override
   void initState() {
@@ -44,7 +45,7 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
               children: [
                 disciplineTextField(),
                 const SizedBox(height: 30),
-                groupTextField(),
+                groupDropDown(),
                 const SizedBox(height: 30),
                 buildButtonWithDecorationInBox(),
               ],
@@ -53,6 +54,7 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
     );
   }
 
+  //TODO сделать по логике дропдавнлиста
   Widget disciplineTextField(){
     return TextField(
       controller: disciplineCtrl,
@@ -83,14 +85,42 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
         border: const OutlineInputBorder(),
         icon: const Icon(Icons.group),
         suffixIcon: groupCtrl.text.isEmpty
-            ? Container(width: 0)
+            ? IconButton(
+                icon: const Icon(Icons.list),
+                onPressed: () => groupCtrl.clear(),
+            )
             : IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => groupCtrl.clear(),
-        ),
+                icon: const Icon(Icons.close),
+                onPressed: () => groupCtrl.clear(),
+            ),
       ),
       keyboardType: TextInputType.name,
       textInputAction: TextInputAction.done,
+    );
+  }
+
+  //TODO сделать красиво, возможность добавить новый, поиск существующего параллельно вводу
+  Widget groupDropDown(){
+    return DropdownButtonFormField(
+      decoration: InputDecoration(
+        label: const Text('Группа'),
+        border: const OutlineInputBorder(),
+        icon: IconButton(
+          icon: const Icon(Icons.group_add),
+          onPressed: () {},
+        ),
+      ),
+      value: dropdownValue,
+      items: GroupList.groups
+          .map((group) => group.toString())
+          .toSet()
+          .map((value) => DropdownMenuItem(value: value, child: Text(value)))
+          .toList(),
+      onChanged: (String? newValue) {
+        setState(() {
+          dropdownValue = newValue!;
+        });
+      },
     );
   }
 
