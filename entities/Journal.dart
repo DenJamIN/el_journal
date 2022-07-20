@@ -9,7 +9,7 @@ class Journal{
   late Group group;
   late Discipline discipline;
 
-  Journal(this.group, this.discipline){
+  Journal({required this.group, required this.discipline}){
     String groupName = group.toString();
     String disciplineName = discipline.toString();
     name = '$disciplineName\t$groupName';

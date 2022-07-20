@@ -13,12 +13,12 @@ mixin SettingsTools {
 
 mixin JournalList{
   static List<Journal> journals = <Journal>[
-    Journal(Group('Б-ИСиТ-ИБ', 2019, 4), Discipline('Базы данных')),
-    Journal(Group('Б-ИСиТ', 2019, 4), Discipline('Управление данными')),
-    Journal(Group('Б-ИСиТ-ИБ', 2020, 2), Discipline('Базы данных')),
-    Journal(Group('Б-ГиМУ', 2021, 2), Discipline('Экономика')),
-    Journal(Group('С-ЛД', 2018, 5), Discipline('Фармакология')),
-    Journal(Group('Б-ИСиТ-ИБ', 2019, 4), Discipline('Протоколы и интерфейсы')),
-    Journal(Group('Б-ИСиТ-ИБ', 2019, 4), Discipline('Защита систем'))
+    Journal(group: Group('Б-ИСиТ-ИБ', 2019, 4), discipline: Discipline('Базы данных')),
+    Journal(group: Group('Б-ИСиТ', 2019, 4), discipline: Discipline('Управление данными')),
+    Journal(group: Group('Б-ИСиТ-ИБ', 2020, 2), discipline: Discipline('Базы данных')),
+    Journal(group: Group('Б-ГиМУ', 2021, 2), discipline: Discipline('Экономика')),
+    Journal(group: Group('С-ЛД', 2018, 5), discipline: Discipline('Фармакология')),
+    Journal(group: Group('Б-ИСиТ-ИБ', 2019, 4), discipline: Discipline('Протоколы и интерфейсы')),
+    Journal(group: Group('Б-ИСиТ-ИБ', 2019, 4), discipline: Discipline('Защита систем'))
   ];
 }
