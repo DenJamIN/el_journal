@@ -1,7 +1,12 @@
 
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:el_journal/entities/Discipline.dart';
 import 'package:flutter/material.dart';
+
+import '../builders/BuilderLists.dart';
+import '../entities/Group.dart';
+import '../entities/Journal.dart';
 
 //TODO заполнить страницу
 //-Страница конструктора журнала.
@@ -15,21 +20,21 @@ class JournalConstructorPage extends StatefulWidget{
 
 class _JournalConstructorPage extends State<JournalConstructorPage>{
   final EdgeInsets DEFAULT_EDGES_INSETS = const EdgeInsets.all(32);
-  final journalCtrl = TextEditingController();
   final disciplineCtrl = TextEditingController();
   final groupCtrl = TextEditingController();
+  bool disciplineValidate = false;
+  bool groupValidate = false;
 
   @override
   void initState() {
     super.initState();
-    journalCtrl.addListener(() => setState((){}));
     disciplineCtrl.addListener(() => setState((){}));
     groupCtrl.addListener(() => setState((){}));
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: const Text('Конструктор журнала'),
         ),
@@ -37,8 +42,6 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
             child: ListView(
               padding: DEFAULT_EDGES_INSETS,
               children: [
-                journalTextField(),
-                const SizedBox(height: 30),
                 disciplineTextField(),
                 const SizedBox(height: 30),
                 groupTextField(),
@@ -50,32 +53,12 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
     );
   }
 
-  Widget journalTextField(){
-    return TextField(
-      controller: journalCtrl,
-      decoration: InputDecoration(
-        label: const Text('Название журнала'),
-        border: const OutlineInputBorder(),
-        icon: const Icon(Icons.library_books),
-        suffixIcon: journalCtrl.text.isEmpty
-            ? Container(width: 0)
-            : IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () => journalCtrl.clear(),
-            ),
-
-      ),
-      keyboardType: TextInputType.name,
-      textInputAction: TextInputAction.done,
-      maxLines: 2,
-    );
-  }
-
   Widget disciplineTextField(){
     return TextField(
       controller: disciplineCtrl,
       decoration: InputDecoration(
         label: const Text('Дисциплина'),
+        errorText: disciplineValidate ? 'Поле обязательно для заполнение' : null,
         border: const OutlineInputBorder(),
         icon: const Icon(Icons.lightbulb),
         suffixIcon: disciplineCtrl.text.isEmpty
@@ -84,11 +67,10 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
           icon: const Icon(Icons.close),
           onPressed: () => disciplineCtrl.clear(),
         ),
-
       ),
       keyboardType: TextInputType.name,
       textInputAction: TextInputAction.done,
-      maxLines: 3,
+      maxLines: 2,
     );
   }
 
@@ -97,6 +79,7 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
       controller: groupCtrl,
       decoration: InputDecoration(
         label: const Text('Группа'),
+        errorText: groupValidate ? 'Поле обязательно для заполнение' : null,
         border: const OutlineInputBorder(),
         icon: const Icon(Icons.group),
         suffixIcon: groupCtrl.text.isEmpty
@@ -105,7 +88,6 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
           icon: const Icon(Icons.close),
           onPressed: () => groupCtrl.clear(),
         ),
-
       ),
       keyboardType: TextInputType.name,
       textInputAction: TextInputAction.done,
@@ -135,7 +117,7 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
   }
 
   Widget buildTextButton(){
-    return TextButton(
+    return ElevatedButton(
       style: TextButton.styleFrom(
         padding: const EdgeInsets.all(32.0),
         primary: Colors.white,
@@ -149,9 +131,25 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
         ),
       ),
       onPressed: () {
-        //TODO добавить обработку
+        setState(() {
+          groupCtrl.text.isEmpty ? groupValidate = true : groupValidate = false;
+          disciplineCtrl.text.isEmpty ? disciplineValidate = true : disciplineValidate = false;
+        });
+        if(isFilled()){
+          JournalList.journals.add(
+              Journal(
+                  group: Group(groupCtrl.value.text, 2020, 2),
+                  discipline: Discipline(disciplineCtrl.value.text)
+              )
+          );
+          Navigator.pop(context);
+        }
       },
     );
   }
 
+  bool isFilled(){
+    return groupCtrl.text.isNotEmpty
+        && disciplineCtrl.text.isNotEmpty;
+  }
 }
