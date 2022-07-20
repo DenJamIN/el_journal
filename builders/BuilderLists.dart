@@ -22,3 +22,15 @@ mixin JournalList{
     Journal(group: Group('Б-ИСиТ-ИБ', 2019, 4), discipline: Discipline('Защита систем'))
   ];
 }
+
+mixin GroupList{
+  static List<Group> groups = <Group>[
+    Group('Б-ИСиТ-ИБ', 2019, 4),
+    Group('Б-ИСиТ', 2019, 4),
+    Group('Б-ИСиТ-ИБ', 2020, 2),
+    Group('Б-ГиМУ', 2021, 2),
+    Group('С-ЛД', 2018, 5),
+    Group('Б-ИСиТ-ИБ', 2019, 4),
+    Group('Б-ИСиТ-ИБ', 2019, 4),
+  ];
+}
