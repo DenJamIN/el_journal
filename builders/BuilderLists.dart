@@ -34,3 +34,14 @@ mixin GroupList{
     Group('Б-ИСиТ-ИБ', 2019, 4),
   ];
 }
+
+mixin DisciplineList{
+  static List<Discipline> disciplines = <Discipline>[
+    Discipline('Базы данных'),
+    Discipline('Управление данными'),
+    Discipline('Экономика'),
+    Discipline('Фармакология'),
+    Discipline('Протоколы и интерфейсы'),
+    Discipline('Защита систем'),
+  ];
+}
