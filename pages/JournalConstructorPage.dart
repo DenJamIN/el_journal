@@ -2,6 +2,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:el_journal/entities/Discipline.dart';
+import 'package:el_journal/widgets/DropdownInputFieldWidget.dart';
 import 'package:flutter/material.dart';
 
 import '../builders/BuilderLists.dart';
@@ -19,12 +20,19 @@ class JournalConstructorPage extends StatefulWidget{
 }
 
 class _JournalConstructorPage extends State<JournalConstructorPage>{
-  final EdgeInsets DEFAULT_EDGES_INSETS = const EdgeInsets.all(32);
   final disciplineCtrl = TextEditingController();
   final groupCtrl = TextEditingController();
   bool disciplineValidate = false;
+  bool disciplinePanel = false;
+  bool disciplineValuePresent = true;
   bool groupValidate = false;
   String dropdownValue = GroupList.groups.first.toString();
+  //TODO определить размеры смартфона и расположение элементов
+  late double phoneWidth;
+  late double phoneHeight;
+
+  Set<Discipline> disciplines = DisciplineList.disciplines.toSet();
+  final Set<Discipline> disciplinesFilters = DisciplineList.disciplines.toSet();
 
   @override
   void initState() {
@@ -35,96 +43,41 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
 
   @override
   Widget build(BuildContext context) {
+    phoneWidth = MediaQuery.of(context).size.width;
+    phoneHeight = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
           title: const Text('Конструктор журнала'),
         ),
         body: Center(
             child: ListView(
-              padding: DEFAULT_EDGES_INSETS,
+              padding: EdgeInsets.all(phoneWidth/12.5),
               children: [
-                disciplineTextField(),
+                DropdownInputFieldWidget(
+                    ctrl: disciplineCtrl,
+                    label: const Text('Дисциплина'),
+                    border: const OutlineInputBorder(),
+                    iconOut: const Icon(Icons.lightbulb),
+                    iconSuffix: const Icon(Icons.add_box),
+                    items: DisciplineList.disciplines.toSet()
+                ),
+                DropdownInputFieldWidget(
+                    ctrl: groupCtrl,
+                    label: const Text('Группа'),
+                    border: const OutlineInputBorder(),
+                    iconOut: const Icon(Icons.groups),
+                    iconSuffix: const Icon(Icons.add_box),
+                    items: GroupList.groups.toSet()
+                ),
                 const SizedBox(height: 30),
-                groupDropDown(),
-                const SizedBox(height: 30),
-                buildButtonWithDecorationInBox(),
+                buildButtonBoxDecoration()
               ],
             ),
         )
     );
   }
 
-  //TODO сделать по логике дропдавнлиста
-  Widget disciplineTextField(){
-    return TextField(
-      controller: disciplineCtrl,
-      decoration: InputDecoration(
-        label: const Text('Дисциплина'),
-        errorText: disciplineValidate ? 'Поле обязательно для заполнение' : null,
-        border: const OutlineInputBorder(),
-        icon: const Icon(Icons.lightbulb),
-        suffixIcon: disciplineCtrl.text.isEmpty
-            ? Container(width: 0)
-            : IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () => disciplineCtrl.clear(),
-        ),
-      ),
-      keyboardType: TextInputType.name,
-      textInputAction: TextInputAction.done,
-      maxLines: 2,
-    );
-  }
-
-  Widget groupTextField(){
-    return TextField(
-      controller: groupCtrl,
-      decoration: InputDecoration(
-        label: const Text('Группа'),
-        errorText: groupValidate ? 'Поле обязательно для заполнение' : null,
-        border: const OutlineInputBorder(),
-        icon: const Icon(Icons.group),
-        suffixIcon: groupCtrl.text.isEmpty
-            ? IconButton(
-                icon: const Icon(Icons.list),
-                onPressed: () => groupCtrl.clear(),
-            )
-            : IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () => groupCtrl.clear(),
-            ),
-      ),
-      keyboardType: TextInputType.name,
-      textInputAction: TextInputAction.done,
-    );
-  }
-
-  //TODO сделать красиво, возможность добавить новый, поиск существующего параллельно вводу
-  Widget groupDropDown(){
-    return DropdownButtonFormField(
-      decoration: InputDecoration(
-        label: const Text('Группа'),
-        border: const OutlineInputBorder(),
-        icon: IconButton(
-          icon: const Icon(Icons.group_add),
-          onPressed: () {},
-        ),
-      ),
-      value: dropdownValue,
-      items: GroupList.groups
-          .map((group) => group.toString())
-          .toSet()
-          .map((value) => DropdownMenuItem(value: value, child: Text(value)))
-          .toList(),
-      onChanged: (String? newValue) {
-        setState(() {
-          dropdownValue = newValue!;
-        });
-      },
-    );
-  }
-
-  Widget buildButtonWithDecorationInBox(){
+  Widget buildButtonBoxDecoration(){
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: Stack(
