@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-//TODO доработать.
+//TODO доработать. Ограничить количество появляющихся элементов
 //Представляет из себя комбинацию из выпадающего списка и текстового поля
 // ignore: must_be_immutable
 class DropdownInputFieldWidget extends StatefulWidget{
@@ -38,7 +38,7 @@ class DropdownInputFieldWidget extends StatefulWidget{
 
 class _DropdownInputFieldWidget extends State<DropdownInputFieldWidget>{
   bool panelVisibility = false;
-  bool panelValuesPresent = true;
+  bool buttonVisibility = true;
   TextEditingController ctrl;
   late Set itemsFiltered;
   Set items;
@@ -78,23 +78,26 @@ class _DropdownInputFieldWidget extends State<DropdownInputFieldWidget>{
         label: label,
         border: border,
         icon: iconOut,
-        suffixIcon: panelValuesPresent
-            ? Container(width: 0)
-            : IconButton(
-          icon: iconSuffix,
-          onPressed: () {
-            //TODO добавить создание
-            panelVisibility = true;
-          },
-        ),
+        suffixIcon: buttonVisibility
+            ? IconButton(
+                icon: iconSuffix,
+                onPressed: () {
+                  //TODO добавить создание
+                })
+            : Container(width: 0),
       ),
       keyboardType: TextInputType.name,
-      textInputAction: TextInputAction.done,
+      textInputAction: TextInputAction.next,
       onTap: () => ctrl.value.text.isEmpty ? panelVisibility = true : null,
       onChanged: (text) {
         itemsFiltered = items.where((element) => element.toString().toLowerCase().contains(text.toLowerCase())).toSet();
-        itemsFiltered.isEmpty ? panelVisibility = false : panelVisibility = true;
-        itemsFiltered.isEmpty ? panelValuesPresent = false : panelValuesPresent = true;
+        if (itemsFiltered.isEmpty) {
+          panelVisibility = false;
+          buttonVisibility = true;
+        }else{
+          panelVisibility = true;
+          ctrl.value.text.isEmpty ? buttonVisibility = true : buttonVisibility = false;
+        }
       },
     );
   }
@@ -111,6 +114,7 @@ class _DropdownInputFieldWidget extends State<DropdownInputFieldWidget>{
                     child: Text(value),
                     onPressed: () {
                       panelVisibility = false;
+                      buttonVisibility = false;
                       ctrl.text = value;
                     });
               }).toList(),
