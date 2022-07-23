@@ -62,16 +62,16 @@ class _DropdownInputFieldWidget extends State<DropdownInputFieldWidget>{
   Widget build(BuildContext context) {
     return Column(
       children: [
-        disciplineTextField(),
+        buildTextField(),
         panelVisibility
-            ? disciplineSearchPanel()
+            ? buildDropdownPanel()
             : const SizedBox(height: 30),
       ],
     );
   }
 
   //TODO сделать по логике дропдавнлиста
-  Widget disciplineTextField(){
+  Widget buildTextField(){
     return TextField(
       controller: ctrl,
       decoration: InputDecoration(
@@ -102,22 +102,26 @@ class _DropdownInputFieldWidget extends State<DropdownInputFieldWidget>{
     );
   }
 
-  Widget disciplineSearchPanel(){
-    return Center(
-      //TODO Поменять Column на другой материал виджет. Сделать панельку КРАСИВОЙ!
-        child: Column(
-          children: itemsFiltered
-              .map((d) => d.toString())
-              .toSet()
-              .map((value) {
-                return ElevatedButton(
-                    child: Text(value),
-                    onPressed: () {
-                      panelVisibility = false;
-                      buttonVisibility = false;
-                      ctrl.text = value;
-                    });
-              }).toList(),
+  Widget buildDropdownPanel(){
+    return SizedBox(
+        height:MediaQuery.of(context).size.height * 0.2,
+        child: SingleChildScrollView(
+            child: Column(
+              children: itemsFiltered
+                  .map((d) => d.toString())
+                  .toSet()
+                  .map((value) {
+                    return ListTile(
+                        title: Text(value),
+                        tileColor: const Color(0xFFF9FAFF),
+                        hoverColor: const Color(0xFF9EE1F6),
+                        onTap: () {
+                          panelVisibility = false;
+                          buttonVisibility = false;
+                          ctrl.text = value;
+                        });
+                  }).toList(),
+            )
         )
     );
   }
