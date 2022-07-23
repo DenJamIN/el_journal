@@ -57,15 +57,14 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
                     ctrl: disciplineCtrl,
                     label: const Text('Дисциплина'),
                     border: const OutlineInputBorder(),
-                    iconOut: const Icon(Icons.lightbulb),
                     iconSuffix: const Icon(Icons.add_box),
                     items: DisciplineList.disciplines.toSet()
                 ),
+                const SizedBox(height: 30),
                 DropdownInputFieldWidget(
                     ctrl: groupCtrl,
                     label: const Text('Группа'),
                     border: const OutlineInputBorder(),
-                    iconOut: const Icon(Icons.groups),
                     iconSuffix: const Icon(Icons.add_box),
                     items: GroupList.groups.toSet()
                 ),
@@ -121,7 +120,7 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
         if(isFilled()){
           JournalList.journals.add(
               Journal(
-                  group: Group(groupCtrl.value.text, 2020, 2),
+                  group: GroupList.groups.firstWhere((g) => g.toString().contains(groupCtrl.value.text)),
                   discipline: Discipline(disciplineCtrl.value.text)
               )
           );
