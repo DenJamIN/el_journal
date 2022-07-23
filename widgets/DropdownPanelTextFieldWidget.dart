@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
 
-//TODO доработать. Ограничить количество появляющихся элементов
+//TODO доработать
 //Представляет из себя комбинацию из выпадающего списка и текстового поля
 // ignore: must_be_immutable
-class DropdownInputFieldWidget extends StatefulWidget{
+class DropdownPanelTextFieldWidget extends StatefulWidget{
   TextEditingController ctrl;
   Set items;
   Widget? label;
@@ -12,7 +12,7 @@ class DropdownInputFieldWidget extends StatefulWidget{
   Widget? iconOut;
   Icon iconSuffix;
 
-  DropdownInputFieldWidget({
+  DropdownPanelTextFieldWidget({
     Key? key,
     required this.ctrl,
     required this.items,
@@ -23,9 +23,9 @@ class DropdownInputFieldWidget extends StatefulWidget{
   }) : super(key: key);
 
   @override
-  State<DropdownInputFieldWidget> createState() {
+  State<DropdownPanelTextFieldWidget> createState() {
     // ignore: no_logic_in_create_state
-    return _DropdownInputFieldWidget(
+    return _DropdownPanelTextFieldWidget(
         ctrl: ctrl,
         label: label,
         border: border,
@@ -36,7 +36,7 @@ class DropdownInputFieldWidget extends StatefulWidget{
   }
 }
 
-class _DropdownInputFieldWidget extends State<DropdownInputFieldWidget>{
+class _DropdownPanelTextFieldWidget extends State<DropdownPanelTextFieldWidget>{
   bool panelVisibility = false;
   bool buttonVisibility = true;
   TextEditingController ctrl;
@@ -47,7 +47,7 @@ class _DropdownInputFieldWidget extends State<DropdownInputFieldWidget>{
   Widget? iconOut;
   Icon iconSuffix;
 
-  _DropdownInputFieldWidget({
+  _DropdownPanelTextFieldWidget({
     required this.ctrl,
     required this.items,
     required this.iconSuffix,

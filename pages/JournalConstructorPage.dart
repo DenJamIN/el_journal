@@ -2,7 +2,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:el_journal/entities/Discipline.dart';
-import 'package:el_journal/widgets/DropdownInputFieldWidget.dart';
+import 'package:el_journal/widgets/DropdownPanelTextFieldWidget.dart';
 import 'package:flutter/material.dart';
 
 import '../builders/BuilderLists.dart';
@@ -53,7 +53,7 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
             child: ListView(
               padding: EdgeInsets.all(phoneWidth/12.5),
               children: [
-                DropdownInputFieldWidget(
+                DropdownPanelTextFieldWidget(
                     ctrl: disciplineCtrl,
                     label: const Text('Дисциплина'),
                     border: const OutlineInputBorder(),
@@ -61,7 +61,7 @@ class _JournalConstructorPage extends State<JournalConstructorPage>{
                     items: DisciplineList.disciplines.toSet()
                 ),
                 const SizedBox(height: 30),
-                DropdownInputFieldWidget(
+                DropdownPanelTextFieldWidget(
                     ctrl: groupCtrl,
                     label: const Text('Группа'),
                     border: const OutlineInputBorder(),
